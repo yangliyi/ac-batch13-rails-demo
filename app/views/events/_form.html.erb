@@ -23,6 +23,9 @@
 
   <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: true) %>
 
+  <p>Please select groups: </p>
+  <%= f.collection_check_boxes(:group_ids, Group.all, :id, :name) %>
+
   <div class="field">
     <%= f.label :is_public %>
     <%= f.check_box :is_public %>
