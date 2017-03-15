@@ -1,0 +1,6 @@
+<h2>Latest events: </h2>
+<ol>
+	<% @events.each_with_index do |event, index| %>
+		<li><%= event.name %></li>
+	<% end %>
+</ol>

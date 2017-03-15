@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
  
   resources :events do	
+  	collection do
+      get :latest
+    end
   	resources :attendees, controller: 'event_attendees'
   end
 

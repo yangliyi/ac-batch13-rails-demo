@@ -5,4 +5,8 @@ class Event < ApplicationRecord
 	belongs_to :category, optional: true
 
 	delegate :name, :to => :category, :prefix => true, :allow_nil => true
+
+	def self.latest(number)
+		order("created_at desc").limit(number)
+	end
 end
