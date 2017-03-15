@@ -5,6 +5,13 @@ Rails.application.routes.draw do
       get :latest
       post :bulk_delete
     end
+
+    member do
+    	get :dashboard
+    	post :public
+    	post :unpublic
+    end
+
   	resources :attendees, controller: 'event_attendees'
   end
 

@@ -1,10 +1,14 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, except: [:index, :new, :create, :latest, :bulk_delete]
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    if params[:keyword]
+      @events = Event.where("name LIKE ?", "%#{params[:keyword]}%")
+    else
+      @events = Event.all
+    end
   end
 
   # GET /events/1
@@ -68,6 +72,19 @@ class EventsController < ApplicationController
   def bulk_delete
     Event.destroy_all
     redirect_to events_path 
+  end
+
+  def dashboard 
+  end
+
+  def public
+    @event.update(is_public: true)
+    redirect_to events_path 
+  end
+
+  def unpublic
+    @event.update(is_public: false)
+    redirect_to events_path
   end
 
   private
