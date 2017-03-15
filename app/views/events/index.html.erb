@@ -31,4 +31,5 @@
 
 <br>
 
+<%= button_to 'Destroy all events', bulk_delete_events_path, data: { confirm: "This will destroy all events, are you sure?"} %>
 <%= link_to 'New Event', new_event_path %>

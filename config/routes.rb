@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :events do	
   	collection do
       get :latest
+      post :bulk_delete
     end
   	resources :attendees, controller: 'event_attendees'
   end

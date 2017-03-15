@@ -65,6 +65,11 @@ class EventsController < ApplicationController
     @events = Event.latest(5) 
   end
 
+  def bulk_delete
+    Event.destroy_all
+    redirect_to events_path 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
