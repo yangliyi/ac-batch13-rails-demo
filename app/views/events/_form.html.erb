@@ -21,6 +21,8 @@
     <%= f.text_area :descrption %>
   </div>
 
+  <%= f.collection_select(:category_id, Category.all, :id, :name, prompt: true) %>
+
   <div class="field">
     <%= f.label :is_public %>
     <%= f.check_box :is_public %>
