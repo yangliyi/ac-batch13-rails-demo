@@ -4,6 +4,10 @@
 <%= form_tag events_path, method: :get do %>
   <%= text_field_tag :keyword %>
   <%= submit_tag "Search" %>
+<% end %> <br>
+
+<%= form_tag events_path, method: :get do %>
+  <%= select_tag "category", options_from_collection_for_select(Category.all, "name", "name", params[:category]), onchange: 'this.form.submit()', prompt: "All" %>
 <% end %>
 
 <%= form_tag bulk_update_events_path do %>

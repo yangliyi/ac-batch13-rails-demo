@@ -4,11 +4,15 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    if params[:keyword]
-      @events = Event.where("name LIKE ?", "%#{params[:keyword]}%")
-    else
-      @events = Event.all
-    end
+    category = Category.find_by(name: params[:category]) if params[:category]
+
+    @events = if params[:keyword]
+                Event.where("name LIKE ?", "%#{params[:keyword]}%")
+              elsif category
+                category.events
+              else
+                Event.all
+              end
   end
 
   # GET /events/1
