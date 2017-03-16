@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, except: [:index, :new, :create, :latest, :bulk_delete]
+  before_action :set_event, except: [:index, :new, :create, :latest, :bulk_update]
 
   # GET /events
   # GET /events.json
@@ -69,22 +69,26 @@ class EventsController < ApplicationController
     @events = Event.latest(5) 
   end
 
-  def bulk_delete
-    Event.destroy_all
-    redirect_to events_path 
+  def bulk_update
+    events = Event.where(id: params[:ids])
+
+    if params[:commit] == 'PUBLIC'
+      events.update_all(is_public: true)
+    elsif params[:commit] == 'UNPUBLIC'
+      events.update_all(is_public: false)
+    else
+      events.destroy_all
+    end  
+
+    redirect_to :back
   end
 
   def dashboard 
   end
 
-  def public
-    @event.update(is_public: true)
-    redirect_to events_path 
-  end
-
-  def unpublic
-    @event.update(is_public: false)
-    redirect_to events_path
+  def toggle_public
+    @event.toggle!(:is_public)
+    redirect_to :back
   end
 
   private

@@ -3,13 +3,14 @@ Rails.application.routes.draw do
   resources :events do	
   	collection do
       get :latest
-      post :bulk_delete
+      post :bulk_update
     end
 
     member do
     	get :dashboard
     	post :public
     	post :unpublic
+      post :toggle_public
     end
 
   	resources :attendees, controller: 'event_attendees'
