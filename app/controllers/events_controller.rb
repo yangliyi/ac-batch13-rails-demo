@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, except: [:index, :new, :create, :latest, :bulk_update]
+  before_action :authenticate_user!, except: [:index]
 
   # GET /events
   # GET /events.json
@@ -14,8 +15,15 @@ class EventsController < ApplicationController
                 Event.all
               end
 
-    event_id = params[:id]
-    @event = event_id ? Event.find(event_id) : Event.new 
+    if params[:id] && current_user
+      @event = current_user.events.find_by(id: params[:id])
+      unless @event
+        flash[:alert] = "Something went wrong!"
+        redirect_to events_path
+      end
+    else
+      @event = Event.new
+    end
   end
 
   # GET /events/1
@@ -27,6 +35,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
+    @event.user = current_user
 
     respond_to do |format|
       if @event.save

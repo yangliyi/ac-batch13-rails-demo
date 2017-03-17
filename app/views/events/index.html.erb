@@ -35,7 +35,11 @@
         <td><%= event.is_public %></td>
         <td><%= event.capacity %></td>
         <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', events_path(id: event) %></td>
+        <td>
+          <% if current_user && current_user.is_creator?(event) %>
+            <%= link_to 'Edit', events_path(id: event) %>
+          <% end %>
+        </td>
         <td><%= link_to 'Attendee List', event_attendees_path(event) %></td>
         <td><%= link_to 'Dashboard', dashboard_event_path(event) %></td>
       </tr>
