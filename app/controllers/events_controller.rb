@@ -13,20 +13,14 @@ class EventsController < ApplicationController
               else
                 Event.all
               end
+
+    event_id = params[:id]
+    @event = event_id ? Event.find(event_id) : Event.new 
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
-  end
-
-  # GET /events/new
-  def new
-    @event = Event.new
-  end
-
-  # GET /events/1/edit
-  def edit
   end
 
   # POST /events
